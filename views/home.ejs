@@ -1,0 +1,93 @@
+<%- include("partials/header", { title: title, css: css }) %>
+<section class="hero">
+    <div class="container position-relative">
+        <p class="text-uppercase fw-semibold text-body-secondary mb-2">Moziműsor adatbázis</p>
+        <h1 class="hero-title mb-3">Minden film.<br><span class="accent">Minden mozi.</span><br>Egy helyen.</h1>
+        <p class="hero-lead mb-4">A Cinema2Racker a budapesti mozik és a műsoruk adatbázisa: böngészhetsz a filmek között, megnézheted, melyik moziban vetítik őket, és diagramon is követheted a kínálatot.</p>
+        <div class="d-flex flex-wrap gap-2">
+            <a href="/adatbazis" class="btn btn-warning btn-lg">Az adatbázis megnyitása</a>
+            <% if (!user) { %>
+            <a href="/register" class="btn btn-ghost btn-lg">Regisztráció</a>
+            <% } else { %>
+            <a href="/diagram" class="btn btn-ghost btn-lg">Diagram megtekintése</a>
+            <% } %>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5">
+    <div class="row g-3">
+        <div class="col-12 col-md-4">
+            <div class="stat-box">
+                <div class="stat-number"><%= statisztika.filmDarab %></div>
+                <div class="text-body-secondary mt-2">film az adatbázisban</div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="stat-box">
+                <div class="stat-number"><%= statisztika.moziDarab %></div>
+                <div class="text-body-secondary mt-2">mozi</div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="stat-box">
+                <div class="stat-number"><%= statisztika.vetitesDarab %></div>
+                <div class="text-body-secondary mt-2">vetítés (film és mozi párosítás)</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container pb-5">
+    <h2 class="h3 mb-4">Mit találsz az oldalon?</h2>
+    <div class="row g-3">
+        <div class="col-12 col-md-6 col-lg-3">
+            <a href="/adatbazis" class="text-decoration-none">
+                <div class="card feature-card"><div class="card-body">
+                    <div class="feature-icon mb-3">🎞️</div>
+                    <h3 class="h5">Adatbázis</h3>
+                    <p class="mb-0 text-body-secondary">Filmek, mozik és vetítések kereshető táblázatokban.</p>
+                </div></div>
+            </a>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+            <a href="/diagram" class="text-decoration-none">
+                <div class="card feature-card"><div class="card-body">
+                    <div class="feature-icon mb-3">📊</div>
+                    <h3 class="h5">Diagram</h3>
+                    <p class="mb-0 text-body-secondary">A kínálat látványosan, Chart.js diagramokon (bejelentkezés után).</p>
+                </div></div>
+            </a>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+            <a href="/kapcsolat" class="text-decoration-none">
+                <div class="card feature-card"><div class="card-body">
+                    <div class="feature-icon mb-3">✉️</div>
+                    <h3 class="h5">Kapcsolat</h3>
+                    <p class="mb-0 text-body-secondary">Írj nekünk üzenetet, a bejelentkezett felhasználók az Üzenetek menüben olvashatják.</p>
+                </div></div>
+            </a>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+            <a href="<%= user ? "/uzenetek" : "/register" %>" class="text-decoration-none">
+                <div class="card feature-card"><div class="card-body">
+                    <div class="feature-icon mb-3">🔐</div>
+                    <h3 class="h5">Fiók</h3>
+                    <p class="mb-0 text-body-secondary">Regisztrált felhasználóként több menüt érsz el, az admin a filmeket is kezelheti.</p>
+                </div></div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<% if (mufajok.length) { %>
+<section class="container pb-5">
+    <h2 class="h3 mb-3">Népszerű műfajok</h2>
+    <div>
+        <% mufajok.forEach((mufaj) => { %>
+        <span class="genre-chip"><%= mufaj._id %> <strong><%= mufaj.darab %></strong></span>
+        <% }) %>
+    </div>
+</section>
+<% } %>
+<%- include("partials/footer") %>
