@@ -1,0 +1,44 @@
+node_modules/
+.env
+
+# --- macOS ---
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+
+# --- Windows ---
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# --- Linux ---
+*~
+.directory
+
+# --- Szerkesztők / IDE ---
+*.swp
+*.swo
+.project
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+# --- Naplók, ideiglenes és helyi fájlok ---
+*.log
+*.tmp
+*.bak
+*.cache
+.env.*
+!.env.example
+
+# --- Csomagolt / letöltött fájlok ---
+*.zip
+*.rar
+*.7z
