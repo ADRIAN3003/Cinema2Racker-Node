@@ -1,0 +1,32 @@
+<%- include("partials/header", { title: "Regisztráció" }) %>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-5">
+            <div class="card shadow">
+                <div class="card-body p-4">
+                    <h1 class="h3 mb-4">Regisztráció</h1>
+                    <form method="POST" action="/register" novalidate>
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Felhasználónév</label>
+                            <input type="text" class="form-control <%= errors.username ? "is-invalid" : "" %>" id="username" name="username" value="<%= values.username || "" %>" autocomplete="username" required>
+                            <% if (errors.username) { %><div class="invalid-feedback"><%= errors.username %></div><% } %>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Jelszó</label>
+                            <input type="password" class="form-control <%= errors.password ? "is-invalid" : "" %>" id="password" name="password" autocomplete="new-password" required>
+                            <% if (errors.password) { %><div class="invalid-feedback"><%= errors.password %></div><% } %>
+                        </div>
+                        <div class="mb-4">
+                            <label for="passwordConfirm" class="form-label">Jelszó újra</label>
+                            <input type="password" class="form-control <%= errors.passwordConfirm ? "is-invalid" : "" %>" id="passwordConfirm" name="passwordConfirm" autocomplete="new-password" required>
+                            <% if (errors.passwordConfirm) { %><div class="invalid-feedback"><%= errors.passwordConfirm %></div><% } %>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Regisztráció</button>
+                    </form>
+                    <p class="mt-3 mb-0 small text-body-secondary">Már van fiókod? <a href="/login">Jelentkezz be</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include("partials/footer") %>

@@ -1,0 +1,63 @@
+<%
+const pageTitle = locals.title ? title + " | Cinema2Racker" : "Cinema2Racker";
+const extraCss = locals.css || [];
+const isActive = (path) => (path === "/" ? currentPath === "/" : currentPath.startsWith(path)) ? "active" : "";
+%>
+<!DOCTYPE html>
+<html lang="hu" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= pageTitle %></title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/cyborg/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <% extraCss.forEach((href) => { %>
+    <link rel="stylesheet" href="<%= href %>">
+    <% }) %>
+</head>
+<body class="d-flex flex-column min-vh-100">
+<nav class="navbar navbar-expand-lg site-nav sticky-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="/">Cinema<span class="brand-accent">2</span>Racker</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Menü">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainMenu">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link <%= isActive("/") %>" href="/">Főoldal</a></li>
+                <li class="nav-item"><a class="nav-link <%= isActive("/adatbazis") %>" href="/adatbazis">Adatbázis</a></li>
+                <li class="nav-item"><a class="nav-link <%= isActive("/kapcsolat") %>" href="/kapcsolat">Kapcsolat</a></li>
+                <% if (user) { %>
+                <li class="nav-item"><a class="nav-link <%= isActive("/uzenetek") %>" href="/uzenetek">Üzenetek</a></li>
+                <li class="nav-item"><a class="nav-link <%= isActive("/diagram") %>" href="/diagram">Diagram</a></li>
+                <% } %>
+                <% if (user && user.role === "admin") { %>
+                <li class="nav-item"><a class="nav-link <%= isActive("/filmek") %>" href="/filmek">CRUD</a></li>
+                <% } %>
+            </ul>
+            <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
+                <% if (!user) { %>
+                <li class="nav-item"><a class="nav-link <%= isActive("/login") %>" href="/login">Bejelentkezés</a></li>
+                <li class="nav-item"><a class="nav-link <%= isActive("/register") %>" href="/register">Regisztráció</a></li>
+                <% } else { %>
+                <li class="nav-item">
+                    <span class="navbar-text me-lg-3">
+                        <%= user.username %>
+                        <span class="badge <%= user.role === "admin" ? "text-bg-danger" : "text-bg-secondary" %> ms-1"><%= user.role === "admin" ? "admin" : "felhasználó" %></span>
+                    </span>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="/logout">Kijelentkezés</a></li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+</nav>
+<main class="flex-grow-1">
+<% if (flash) { %>
+<div class="container pt-3">
+    <div class="alert alert-<%= flash.type %> alert-dismissible fade show mb-0" role="alert">
+        <%= flash.text %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Bezár"></button>
+    </div>
+</div>
+<% } %>
