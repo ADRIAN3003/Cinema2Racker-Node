@@ -1,0 +1,16 @@
+</main>
+<footer class="site-footer mt-5 py-4">
+    <div class="container text-center">
+        <p class="mb-1 fw-semibold">Cinema<span class="brand-accent">2</span>Racker &ndash; Moziműsor adatbázis</p>
+        <p class="mb-0 small text-body-secondary">
+            Készítették: Medve Adrián (N0M2FB) és Czibulya Márk (P7VEQO)
+        </p>
+        <p class="mb-0 small text-body-secondary">Web-programozás II &ndash; gyakorlati beadandó</p>
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<% (locals.scripts || []).forEach((src) => { %>
+<script src="<%= src %>"></script>
+<% }) %>
+</body>
+</html>

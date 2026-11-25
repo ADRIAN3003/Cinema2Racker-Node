@@ -1,0 +1,27 @@
+:root {
+    --accent: #ffb703;
+}
+
+.site-nav {
+    background: rgba(8, 8, 8, 0.92);
+    border-bottom: 1px solid #2a2a2a;
+    backdrop-filter: blur(6px);
+}
+
+.brand-accent {
+    color: var(--accent);
+}
+
+.site-nav .nav-link.active {
+    color: var(--accent);
+}
+
+.site-footer {
+    background: #0b0b0b;
+    border-top: 1px solid #2a2a2a;
+}
+
+.table-wrap {
+    max-height: 70vh;
+    overflow: auto;
+}
