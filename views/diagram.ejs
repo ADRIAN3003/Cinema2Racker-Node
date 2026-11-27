@@ -1,0 +1,49 @@
+<%- include("partials/header", { title: title }) %>
+<div class="container py-4">
+    <h1 class="h2 mb-1">Diagram</h1>
+    <p class="text-body-secondary mb-4">Összesen <%= osszes.filmek %> film és <%= osszes.mozik %> mozi szerepel az adatbázisban.</p>
+
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card shadow h-100">
+                <div class="card-header fw-semibold">Filmek száma műfajonként</div>
+                <div class="card-body">
+                    <div style="height: 320px">
+                        <canvas id="mufajChart" aria-label="Filmek száma műfajonként"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card shadow h-100">
+                <div class="card-header fw-semibold">A 10 legtöbb filmet játszó mozi</div>
+                <div class="card-body">
+                    <div style="height: 320px">
+                        <canvas id="moziChart" aria-label="A 10 legtöbb filmet játszó mozi"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card shadow h-100">
+                <div class="card-header fw-semibold">Színes és fekete-fehér filmek aránya</div>
+                <div class="card-body">
+                    <div style="height: 320px">
+                        <canvas id="szinesChart" aria-label="Színes és fekete-fehér filmek aránya"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card shadow h-100">
+                <div class="card-header fw-semibold">Szinkron megoszlása</div>
+                <div class="card-body">
+                    <div style="height: 320px">
+                        <canvas id="szinkronChart" aria-label="Szinkron megoszlása"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include("partials/footer", { scripts: ["https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js", "/js/diagram.js"] }) %>
