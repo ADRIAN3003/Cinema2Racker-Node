@@ -1,0 +1,61 @@
+<%- include("../partials/header", { title: title }) %>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow">
+                <div class="card-body p-4">
+                    <h1 class="h3 mb-4"><%= cimsor %></h1>
+                    <form method="POST" action="<%= action %>" novalidate>
+                        <div class="mb-3">
+                            <label for="cim" class="form-label">Cím</label>
+                            <input type="text" class="form-control <%= errors.cim ? "is-invalid" : "" %>" id="cim" name="cim" value="<%= values.cim || "" %>">
+                            <% if (errors.cim) { %><div class="invalid-feedback"><%= errors.cim %></div><% } %>
+                        </div>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label for="mufaj" class="form-label">Műfaj</label>
+                                <input type="text" class="form-control <%= errors.mufaj ? "is-invalid" : "" %>" id="mufaj" name="mufaj" value="<%= values.mufaj || "" %>">
+                                <% if (errors.mufaj) { %><div class="invalid-feedback"><%= errors.mufaj %></div><% } %>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="szarmazas" class="form-label">Származás</label>
+                                <input type="text" class="form-control <%= errors.szarmazas ? "is-invalid" : "" %>" id="szarmazas" name="szarmazas" value="<%= values.szarmazas || "" %>">
+                                <% if (errors.szarmazas) { %><div class="invalid-feedback"><%= errors.szarmazas %></div><% } %>
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-4">
+                                <label for="hossz" class="form-label">Hossz (perc)</label>
+                                <input type="number" class="form-control <%= errors.hossz ? "is-invalid" : "" %>" id="hossz" name="hossz" value="<%= values.hossz ?? "" %>">
+                                <% if (errors.hossz) { %><div class="invalid-feedback"><%= errors.hossz %></div><% } %>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="szines" class="form-label">Színes</label>
+                                <select class="form-select <%= errors.szines ? "is-invalid" : "" %>" id="szines" name="szines">
+                                    <option value="1" <%= values.szines !== "0" ? "selected" : "" %>>színes</option>
+                                    <option value="0" <%= values.szines === "0" ? "selected" : "" %>>fekete-fehér</option>
+                                </select>
+                                <% if (errors.szines) { %><div class="invalid-feedback"><%= errors.szines %></div><% } %>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="szinkron" class="form-label">Szinkron</label>
+                                <select class="form-select <%= errors.szinkron ? "is-invalid" : "" %>" id="szinkron" name="szinkron">
+                                    <option value="" <%= !values.szinkron ? "selected" : "" %>>nincs adat</option>
+                                    <option value="fel" <%= values.szinkron === "fel" ? "selected" : "" %>>feliratos</option>
+                                    <option value="mb" <%= values.szinkron === "mb" ? "selected" : "" %>>magyarul beszélő</option>
+                                    <option value="szöveg nélküli" <%= values.szinkron === "szöveg nélküli" ? "selected" : "" %>>szöveg nélküli</option>
+                                </select>
+                                <% if (errors.szinkron) { %><div class="invalid-feedback"><%= errors.szinkron %></div><% } %>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary"><%= gomb %></button>
+                            <a href="/filmek" class="btn btn-outline-secondary">Mégse</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include("../partials/footer") %>
