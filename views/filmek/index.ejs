@@ -1,0 +1,55 @@
+<%- include("../partials/header", { title: title }) %>
+<%
+const szinkronNevek = { fel: "feliratos", mb: "magyarul beszélő", "szöveg nélküli": "szöveg nélküli" };
+%>
+<div class="container py-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <div class="d-flex align-items-center gap-2">
+            <h1 class="h2 mb-0">Filmek</h1>
+            <span class="badge text-bg-secondary"><%= filmek.length %></span>
+        </div>
+        <a href="/filmek/uj" class="btn btn-warning">Új film</a>
+    </div>
+
+    <div class="row g-2 align-items-center mb-3">
+        <div class="col-md-6">
+            <input type="search" class="form-control" placeholder="Keresés a filmek között..." data-filter-table="#filmTabla" data-filter-count="#filmDarab">
+        </div>
+        <div class="col-md-6 text-md-end text-body-secondary small">Találat: <span id="filmDarab"><%= filmek.length %></span></div>
+    </div>
+
+    <div class="table-responsive table-wrap">
+        <table class="table table-striped table-hover align-middle mb-0" id="filmTabla">
+            <thead class="table-dark sticky-top">
+                <tr>
+                    <th>Cím</th>
+                    <th>Műfaj</th>
+                    <th>Származás</th>
+                    <th class="text-end">Hossz (perc)</th>
+                    <th>Színes</th>
+                    <th>Szinkron</th>
+                    <th class="text-end">Műveletek</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% filmek.forEach((film) => { %>
+                <tr>
+                    <td class="fw-semibold"><%= film.cim %></td>
+                    <td><%= film.mufaj || "–" %></td>
+                    <td><%= film.szarmazas || "–" %></td>
+                    <td class="text-end"><%= film.hossz %></td>
+                    <td><%= film.szines ? "színes" : "fekete-fehér" %></td>
+                    <td><%= szinkronNevek[film.szinkron] || "–" %></td>
+                    <td class="text-end text-nowrap">
+                        <a href="/filmek/<%= film._id %>/szerkesztes" class="btn btn-sm btn-outline-warning">Szerkesztés</a>
+                        <form method="POST" action="/filmek/<%= film._id %>/torles" class="d-inline" onsubmit="return confirm('Biztosan törlöd a filmet a vetítéseivel együtt?')">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Törlés</button>
+                        </form>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>
+<%- include("../partials/footer", { scripts: ["/js/tablafilter.js"] }) %>
