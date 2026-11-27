@@ -1,0 +1,36 @@
+<%- include("partials/header", { title: title }) %>
+<div class="container py-4">
+    <div class="d-flex align-items-center gap-2 mb-4">
+        <h1 class="h2 mb-0">Üzenetek</h1>
+        <span class="badge text-bg-secondary"><%= uzenetek.length %></span>
+    </div>
+    <% if (uzenetek.length === 0) { %>
+    <div class="alert alert-info mb-0" role="alert">Még nem érkezett üzenet.</div>
+    <% } else { %>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>Küldés ideje</th>
+                    <th>Név</th>
+                    <th>E-mail</th>
+                    <th>Tárgy</th>
+                    <th>Üzenet</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% uzenetek.forEach((uzenet) => { %>
+                <tr>
+                    <td class="text-nowrap"><%= new Date(uzenet.createdAt).toLocaleString("hu-HU", { timeZone: "Europe/Budapest" }) %></td>
+                    <td class="fw-semibold"><%= uzenet.nev %></td>
+                    <td><%= uzenet.email %></td>
+                    <td><%= uzenet.targy %></td>
+                    <td style="white-space: pre-line"><%= uzenet.uzenet %></td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+    <% } %>
+</div>
+<%- include("partials/footer") %>

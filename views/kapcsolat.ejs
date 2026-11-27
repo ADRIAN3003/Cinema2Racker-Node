@@ -1,0 +1,46 @@
+<%- include("partials/header", { title: title }) %>
+<div class="container py-4">
+    <h1 class="h2 mb-4">Kapcsolat</h1>
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="card shadow">
+                <div class="card-body p-4">
+                    <h2 class="h5 mb-3">Üzenet küldése</h2>
+                    <form method="POST" action="/kapcsolat" novalidate>
+                        <div class="mb-3">
+                            <label for="nev" class="form-label">Név</label>
+                            <input type="text" class="form-control <%= errors.nev ? "is-invalid" : "" %>" id="nev" name="nev" value="<%= values.nev || "" %>">
+                            <% if (errors.nev) { %><div class="invalid-feedback"><%= errors.nev %></div><% } %>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">E-mail</label>
+                            <input type="text" class="form-control <%= errors.email ? "is-invalid" : "" %>" id="email" name="email" value="<%= values.email || "" %>">
+                            <% if (errors.email) { %><div class="invalid-feedback"><%= errors.email %></div><% } %>
+                        </div>
+                        <div class="mb-3">
+                            <label for="targy" class="form-label">Tárgy</label>
+                            <input type="text" class="form-control <%= errors.targy ? "is-invalid" : "" %>" id="targy" name="targy" value="<%= values.targy || "" %>">
+                            <% if (errors.targy) { %><div class="invalid-feedback"><%= errors.targy %></div><% } %>
+                        </div>
+                        <div class="mb-4">
+                            <label for="uzenet" class="form-label">Üzenet</label>
+                            <textarea class="form-control <%= errors.uzenet ? "is-invalid" : "" %>" id="uzenet" name="uzenet" rows="6"><%= values.uzenet || "" %></textarea>
+                            <% if (errors.uzenet) { %><div class="invalid-feedback"><%= errors.uzenet %></div><% } %>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Küldés</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="card shadow">
+                <div class="card-body p-4">
+                    <h2 class="h5 mb-3">Lépj kapcsolatba velünk</h2>
+                    <p>Ha kérdésed van a moziműsorral kapcsolatban, hibát találtál az adatok között, vagy javaslatod van az oldal fejlesztéséhez, írj nekünk bátran ezen az űrlapon keresztül.</p>
+                    <p class="mb-0 text-body-secondary small">A beküldött üzeneteket elmentjük az adatbázisba, és bejelentkezett felhasználóként az Üzenetek oldalon meg is tekinthetők.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include("partials/footer") %>
