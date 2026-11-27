@@ -41,8 +41,10 @@ const szinkronNevek = { fel: "feliratos", mb: "magyarul beszélő", "szöveg né
                     <td><%= film.szines ? "színes" : "fekete-fehér" %></td>
                     <td><%= szinkronNevek[film.szinkron] || "–" %></td>
                     <td class="text-end text-nowrap">
-                        <button type="button" class="btn btn-sm btn-outline-warning" disabled>Szerkesztés</button>
-                        <button type="button" class="btn btn-sm btn-outline-danger" disabled>Törlés</button>
+                        <a href="/filmek/<%= film._id %>/szerkesztes" class="btn btn-sm btn-outline-warning">Szerkesztés</a>
+                        <form method="POST" action="/filmek/<%= film._id %>/torles" class="d-inline" onsubmit="return confirm('Biztosan törlöd a filmet a vetítéseivel együtt?')">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Törlés</button>
+                        </form>
                     </td>
                 </tr>
                 <% }) %>

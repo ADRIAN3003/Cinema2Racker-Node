@@ -1,4 +1,6 @@
+const mongoose = require("mongoose");
 const Film = require("../models/Film");
+const Vetites = require("../models/Vetites");
 
 const urlapAdatok = (body) => {
     const b = body || {};
@@ -31,6 +33,14 @@ const hibakKigyujtese = (err) => {
             : err.errors[mezo].message;
     }
     return errors;
+};
+
+const nemTalalhato = (res) => {
+    return res.status(404).render("error", {
+        title: "Nem található",
+        code: 404,
+        text: "A film nem található."
+    });
 };
 
 exports.index = async (req, res, next) => {
@@ -70,6 +80,90 @@ exports.letrehoz = async (req, res, next) => {
                 errors: hibakKigyujtese(err)
             });
         }
+        next(err);
+    }
+};
+
+exports.szerkesztForm = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        if (!mongoose.isValidObjectId(id)) {
+            return nemTalalhato(res);
+        }
+        const film = await Film.findById(id).lean();
+        if (!film) {
+            return nemTalalhato(res);
+        }
+        res.render("filmek/form", {
+            title: "Film szerkesztése",
+            cimsor: "Film szerkesztése",
+            action: `/filmek/${film._id}`,
+            gomb: "Mentés",
+            values: {
+                cim: film.cim,
+                mufaj: film.mufaj || "",
+                szarmazas: film.szarmazas || "",
+                hossz: film.hossz,
+                szines: film.szines ? "1" : "0",
+                szinkron: film.szinkron || ""
+            },
+            errors: {}
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
+exports.frissit = async (req, res, next) => {
+    const { id } = req.params;
+    if (!mongoose.isValidObjectId(id)) {
+        return nemTalalhato(res);
+    }
+    const { values, adat } = urlapAdatok(req.body);
+    try {
+        const film = await Film.findById(id);
+        if (!film) {
+            return nemTalalhato(res);
+        }
+        film.cim = adat.cim;
+        film.mufaj = adat.mufaj;
+        film.szarmazas = adat.szarmazas;
+        film.hossz = adat.hossz;
+        film.szines = adat.szines;
+        film.szinkron = adat.szinkron;
+
+        await film.save();
+        req.session.flash = { type: "success", text: "A film módosítása megtörtént." };
+        req.session.save(() => res.redirect("/filmek"));
+    } catch (err) {
+        if (err.name === "ValidationError") {
+            return res.status(422).render("filmek/form", {
+                title: "Film szerkesztése",
+                cimsor: "Film szerkesztése",
+                action: `/filmek/${id}`,
+                gomb: "Mentés",
+                values,
+                errors: hibakKigyujtese(err)
+            });
+        }
+        next(err);
+    }
+};
+
+exports.torol = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        if (!mongoose.isValidObjectId(id)) {
+            return nemTalalhato(res);
+        }
+        const film = await Film.findByIdAndDelete(id);
+        if (!film) {
+            return nemTalalhato(res);
+        }
+        await Vetites.deleteMany({ film: id });
+        req.session.flash = { type: "success", text: "A film törlése megtörtént." };
+        req.session.save(() => res.redirect("/filmek"));
+    } catch (err) {
         next(err);
     }
 };
